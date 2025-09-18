@@ -11,8 +11,8 @@ export const CatagoryFile = [
     },
 
      {
-        title: "men's clothing",
-        name: "mens Clothing",
+        title: "Men's clothing",
+        name: "men's clothing",
         imgLink: "https://fakestoreapi.com/img/71li-ujtlUL._AC_UX679_t.png"
     },
      {
