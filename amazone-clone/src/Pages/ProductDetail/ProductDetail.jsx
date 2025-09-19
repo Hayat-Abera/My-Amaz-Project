@@ -5,23 +5,33 @@ import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { productUrl } from '../../Api/endPoints'
 import ProductCard from '../../Components/Products/ProductCard'
+import Loader from '../../Components/Loader/Loader'
 
 const ProductDetail = () => {
     const {productId} = useParams()
    const[product, setProducts] = useState([]);
+   const[isLoading, setIsLoading] = useState(false);
+
+
     // console.log(productId)
     useEffect(() => {
+      setIsLoading(true)
         axios.get(`${productUrl}/products/${productId}`)
         .then((res) => {
             setProducts(res.data)
+      setIsLoading(false)
+
         }).catch((err) =>{
             console.log(err)
+      setIsLoading(false)
+
         })
 
     }, [])
   return (
+    
     <LayOut>
-   <ProductCard products={product}/>
+      {isLoading? (<Loader/>):( <ProductCard products={product}/>)}
     </LayOut>
   )
 }
