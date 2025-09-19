@@ -15,7 +15,7 @@ console.log(basket.length)
 
   return (
     <>
-      <section>
+      <section className={Styles.fixed_header}>
       <section  className={Styles.header_container}>
         <div className={Styles.logo_container}>
             {/* logo */}
@@ -71,8 +71,9 @@ console.log(basket.length)
                 </Link>
         </div>
       </section>
+       <LowerHeader/>
     </section>
-    <LowerHeader/>
+   
     </>
   )
 }
