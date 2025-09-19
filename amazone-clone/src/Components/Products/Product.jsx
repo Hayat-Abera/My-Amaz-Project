@@ -33,7 +33,10 @@ function Product() {
        { 
        products.map((singleProduct) =>(
        
-          <ProductCard products = {singleProduct} key={singleProduct.id}/>
+          <ProductCard products = {singleProduct} key={singleProduct.id}
+            renderAdd={true}
+          
+          />
        ))
        
        }

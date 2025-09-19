@@ -34,6 +34,8 @@ const ProductDetail = () => {
       {isLoading? (<Loader/>):( <ProductCard products={product}
       flex={true}
       renderDesc={true}
+      renderAdd={true}
+
       />)}
     </LayOut>
   )

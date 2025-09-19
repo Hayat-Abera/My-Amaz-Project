@@ -41,7 +41,11 @@ const Results = () => {
         isLoading?(<Loader/>) : (<div className={Styles.products_container}>
         {
             results?.map((products) => (
-                <ProductCard key={productUrl.id} products={products}/>
+                <ProductCard key={productUrl.id} products={products}
+                renderDesc={false}
+            renderAdd={true}
+                
+                />
             ))
         }
 
