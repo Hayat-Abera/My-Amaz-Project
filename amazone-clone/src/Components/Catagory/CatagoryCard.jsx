@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import Styles from './catagory.module.css'
 
 const CatagoryCard = ({ data }) => {
-  console.log(data)
+  // console.log(data)
   return (
     <div className={Styles.catagory}>
       <Link to={`/category/${data.name}`}>
