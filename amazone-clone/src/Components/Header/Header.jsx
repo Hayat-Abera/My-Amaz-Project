@@ -6,10 +6,11 @@ import LowerHeader from "./LowerHeader";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { DataContext } from "../DataProvider/DataProvider";
+import { auth } from "../../Utility/firebase";
 const Header = () => {
 
 
- const [{basket}, dispatch]= useContext(DataContext)
+ const [{user, basket}, dispatch]= useContext(DataContext)
  const totalItem = basket?.reduce((amount,item)=>{
   return item.amount + amount
  }, 0)
@@ -55,9 +56,22 @@ const Header = () => {
           </Link>
     
             {/* three components */}
-            <Link to="/auth">
-                    <p>Sign In</p>
-                    <span>Account & Lists</span>           
+            <Link to={!user && "/auth"}>
+            {
+              user ? (
+                <>
+              <p>Hello {user?.email?.split("@")[0]} </p>
+                 <span onClick={() => auth.signOut()}>SignOut</span> 
+              </>
+              ) : (
+                <>
+                  <p>Hello, Sign In</p>
+                  <span>Account & Lists</span>  
+                  </>
+              )
+            }
+                  
+                             
             </Link>
 
             {/* orders */}
