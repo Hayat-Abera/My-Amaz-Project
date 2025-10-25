@@ -13,7 +13,7 @@ function ProductCard({products,flex,renderDesc,renderAdd}) {
 
    const [state, dispatch] =useContext(DataContext)
   //  console.log(state)
-
+ 
 
    const addToCart = () =>{
     dispatch({
@@ -35,7 +35,7 @@ function ProductCard({products,flex,renderDesc,renderAdd}) {
      {renderDesc && <div style={{maxWidth:'750px'}}>{description}</div>}   
         <div className={Styles.rating}>
             {/* rating */}
-            <Rating value={rating} precision={0.1}/>
+            <Rating value={rating?.rate} precision={0.1}/>
             {/* rating count */}
            
             <small>{rating?.count}</small>

@@ -49,7 +49,7 @@ const Header = () => {
          {/* right side */}
         <div className={Styles.order_container}>
             <Link to="" className={Styles.language}>
-            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Flag_of_the_United_States_%28Web_Colors%29.svg/1280px-Flag_of_the_United_States_%28Web_Colors%29.svg.png" alt="american-flag" />
+            <img src="https://cdn.britannica.com/33/4833-004-828A9A84/Flag-United-States-of-America.jpg" alt="american-flag" />
           <select name="" id="">
             <option value="">EN</option>
           </select>

@@ -1,56 +1,56 @@
-const { onRequest } = require("firebase-functions/v2/https");
 const { setGlobalOptions } = require("firebase-functions/v2");
+const { onRequest } = require("firebase-functions/v2/https");
 const logger = require("firebase-functions/logger");
 
+// Limit instance count to control cost
+setGlobalOptions({ maxInstances: 100 });
+
+// Imports
 const express = require("express");
 const cors = require("cors");
-const dotenv = require("dotenv");
+require("dotenv").config();
+const stripe = require("stripe")(process.env.STRIPE_KEY);
 
-dotenv.config();
-
+// Initialize Express app
 const app = express();
+
+// Middleware
 app.use(cors({ origin: true }));
 app.use(express.json());
 
-// Test route
+// Simple test route
 app.get("/", (req, res) => {
   res.status(200).json({
-   message: "success!"
-   });
+    message: "Successfully loaded!",
+  });
 });
 
-
-app.post("/payment/create", async(req, res) => {
-    //  Initialize Stripe inside the function handler.
-    // This prevents the global scope from timing out on startup.
-    const stripe = require("stripe")(process.env.STRIPE_KEY);
-
-    const total = req.query.total;
-    if (total > 0) {
-      
-            const paymentIntent = await stripe.paymentIntents.create({
-                amount: total,
-                currency: "usd",
-            });
-            //  Respond with the clientSecret, as this is what the frontend needs.
-            res.status(201).json({
-                clientSecret: paymentIntent.client_secret,
-            });
-
-            // res.status(201).json(paymentIntent);
-            // console.log(paymentIntent)
-        
-    } else {
-  
-        res.status(403).json({
-            message: "Total must be greater than 0",
-        });
+// Payment route
+app.post("/payment/create", async (req, res) => {
+  try {
+    const total = parseInt(req.query.total);
+    if (!total || total <= 0) {
+      return res.status(400).json({
+        message: "Total payment must be greater than zero",
+      });
     }
+
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount: total,
+      currency: "usd",
+    });
+
+    res.status(201).json({
+      clientSecret: paymentIntent.client_secret,
+    });
+  } catch (error) {
+    console.error("Stripe error:", error.message);
+    res.status(500).json({ error: error.message });
+  }
 });
 
-
-// Export Express app as Cloud Function
-exports.api = onRequest(app);
-
-// Set global options if needed, but not required for function to run.
-setGlobalOptions({ maxInstances: 100});
+// Export the Express app as an HTTPS function
+exports.api = onRequest(
+  { region: "us-central1", timeoutSeconds: 60, memory: "256MiB" },
+  app
+);
