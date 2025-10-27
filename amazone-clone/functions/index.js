@@ -50,7 +50,4 @@ app.post("/payment/create", async (req, res) => {
 });
 
 // Export the Express app as an HTTPS function
-exports.api = onRequest(
-  { region: "us-central1", timeoutSeconds: 60, memory: "256MiB" },
-  app
-);
+exports.api = onRequest(app);
